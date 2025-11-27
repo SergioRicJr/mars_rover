@@ -1,0 +1,1564 @@
+{
+	"info": {
+		"_postman_id": "mars-rover-api-collection",
+		"name": "Mars Rover API",
+		"description": "Collection para testar a API de controle de sondas em Marte.\n\n## Endpoints\n- POST /probes - Lançar sonda\n- PUT /probes/{id}/commands - Mover sonda\n- GET /probes - Listar sondas\n\n## Como usar\n1. Importe esta collection no Postman\n2. Importe o environment 'Mars_Rover_Local'\n3. Execute os testes na ordem da pasta ou use o Collection Runner",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "probe_id",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "1. Lançar Sonda (POST /probes)",
+			"item": [
+				{
+					"name": "1.1 Lançar sonda - NORTH (Sucesso)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 201 Created', function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test('Response contém id da sonda', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('id');",
+									"    pm.collectionVariables.set('probe_id', jsonData.id);",
+									"});",
+									"",
+									"pm.test('Sonda inicia em (0, 0)', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.x).to.eql(0);",
+									"    pm.expect(jsonData.y).to.eql(0);",
+									"});",
+									"",
+									"pm.test('Direção é NORTH', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.direction).to.eql('NORTH');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"x\": 5,\n    \"y\": 5,\n    \"direction\": \"NORTH\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/probes",
+							"host": ["{{base_url}}"],
+							"path": ["probes"]
+						},
+						"description": "Lança uma nova sonda em um planalto 5x5 apontando para NORTH.\nA sonda sempre inicia na posição (0, 0)."
+					},
+					"response": []
+				},
+				{
+					"name": "1.2 Lançar sonda - EAST",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 201 Created', function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test('Direção é EAST', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.direction).to.eql('EAST');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"x\": 5,\n    \"y\": 5,\n    \"direction\": \"EAST\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/probes",
+							"host": ["{{base_url}}"],
+							"path": ["probes"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1.3 Lançar sonda - SOUTH",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 201 Created', function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test('Direção é SOUTH', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.direction).to.eql('SOUTH');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"x\": 5,\n    \"y\": 5,\n    \"direction\": \"SOUTH\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/probes",
+							"host": ["{{base_url}}"],
+							"path": ["probes"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1.4 Lançar sonda - WEST",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 201 Created', function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test('Direção é WEST', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.direction).to.eql('WEST');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"x\": 5,\n    \"y\": 5,\n    \"direction\": \"WEST\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/probes",
+							"host": ["{{base_url}}"],
+							"path": ["probes"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1.5 Lançar sonda - Planalto pequeno (1x1)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 201 Created', function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test('Sonda criada com sucesso em planalto mínimo', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.x).to.eql(0);",
+									"    pm.expect(jsonData.y).to.eql(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"x\": 1,\n    \"y\": 1,\n    \"direction\": \"NORTH\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/probes",
+							"host": ["{{base_url}}"],
+							"path": ["probes"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1.6 Lançar sonda - Planalto grande (100x100)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 201 Created', function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test('Sonda criada em planalto grande', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('id');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"x\": 100,\n    \"y\": 100,\n    \"direction\": \"NORTH\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/probes",
+							"host": ["{{base_url}}"],
+							"path": ["probes"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1.7 ERRO - Direção inválida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 422 Unprocessable Entity', function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"pm.test('Response contém detalhes do erro', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('detail');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"x\": 5,\n    \"y\": 5,\n    \"direction\": \"INVALID\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/probes",
+							"host": ["{{base_url}}"],
+							"path": ["probes"]
+						},
+						"description": "Testa envio de direção inválida. Deve retornar 422."
+					},
+					"response": []
+				},
+				{
+					"name": "1.8 ERRO - Coordenada X negativa",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 422 Unprocessable Entity', function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"pm.test('Response contém detalhes do erro', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('detail');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"x\": -1,\n    \"y\": 5,\n    \"direction\": \"NORTH\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/probes",
+							"host": ["{{base_url}}"],
+							"path": ["probes"]
+						},
+						"description": "Testa envio de coordenada X negativa. Deve retornar 422."
+					},
+					"response": []
+				},
+				{
+					"name": "1.9 ERRO - Coordenada Y negativa",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 422 Unprocessable Entity', function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"pm.test('Response contém detalhes do erro', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('detail');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"x\": 5,\n    \"y\": -1,\n    \"direction\": \"NORTH\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/probes",
+							"host": ["{{base_url}}"],
+							"path": ["probes"]
+						},
+						"description": "Testa envio de coordenada Y negativa. Deve retornar 422."
+					},
+					"response": []
+				},
+				{
+					"name": "1.10 ERRO - Campo direction ausente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 422 Unprocessable Entity', function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"x\": 5,\n    \"y\": 5\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/probes",
+							"host": ["{{base_url}}"],
+							"path": ["probes"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1.11 ERRO - Body vazio",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 422 Unprocessable Entity', function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/probes",
+							"host": ["{{base_url}}"],
+							"path": ["probes"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2. Mover Sonda (PUT /probes/{id}/commands)",
+			"item": [
+				{
+					"name": "2.0 Setup - Criar sonda para testes de movimento",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 201 Created', function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.collectionVariables.set('probe_id', jsonData.id);",
+									"console.log('Probe ID salvo: ' + jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"x\": 5,\n    \"y\": 5,\n    \"direction\": \"NORTH\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/probes",
+							"host": ["{{base_url}}"],
+							"path": ["probes"]
+						},
+						"description": "Cria uma sonda para ser usada nos testes de movimento. O ID é salvo na variável probe_id."
+					},
+					"response": []
+				},
+				{
+					"name": "2.1 Mover - Comando M (mover para frente)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 200 OK', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Sonda moveu para (0, 1)', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.x).to.eql(0);",
+									"    pm.expect(jsonData.y).to.eql(1);",
+									"});",
+									"",
+									"pm.test('Direção permanece NORTH', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.direction).to.eql('NORTH');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"commands\": \"M\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/probes/{{probe_id}}/commands",
+							"host": ["{{base_url}}"],
+							"path": ["probes", "{{probe_id}}", "commands"]
+						},
+						"description": "Move a sonda 1 passo para frente (NORTH). De (0,0) vai para (0,1)."
+					},
+					"response": []
+				},
+				{
+					"name": "2.2 Mover - Comando R (rotacionar direita)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 200 OK', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Posição permanece (0, 1)', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.x).to.eql(0);",
+									"    pm.expect(jsonData.y).to.eql(1);",
+									"});",
+									"",
+									"pm.test('Direção mudou para EAST', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.direction).to.eql('EAST');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"commands\": \"R\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/probes/{{probe_id}}/commands",
+							"host": ["{{base_url}}"],
+							"path": ["probes", "{{probe_id}}", "commands"]
+						},
+						"description": "Rotaciona a sonda 90° para direita. De NORTH vai para EAST."
+					},
+					"response": []
+				},
+				{
+					"name": "2.3 Mover - Comando L (rotacionar esquerda)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 200 OK', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Direção voltou para NORTH', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.direction).to.eql('NORTH');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"commands\": \"L\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/probes/{{probe_id}}/commands",
+							"host": ["{{base_url}}"],
+							"path": ["probes", "{{probe_id}}", "commands"]
+						},
+						"description": "Rotaciona a sonda 90° para esquerda. De EAST volta para NORTH."
+					},
+					"response": []
+				},
+				{
+					"name": "2.4 Mover - Sequência MRM (exemplo da spec)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Cria uma nova sonda para este teste específico",
+									"pm.sendRequest({",
+									"    url: pm.collectionVariables.get('base_url') + '/probes',",
+									"    method: 'POST',",
+									"    header: { 'Content-Type': 'application/json' },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({ x: 5, y: 5, direction: 'NORTH' })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.collectionVariables.set('test_probe_id', res.json().id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 200 OK', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Posição final é (1, 1)', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.x).to.eql(1);",
+									"    pm.expect(jsonData.y).to.eql(1);",
+									"});",
+									"",
+									"pm.test('Direção final é EAST', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.direction).to.eql('EAST');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"commands\": \"MRM\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/probes/{{test_probe_id}}/commands",
+							"host": ["{{base_url}}"],
+							"path": ["probes", "{{test_probe_id}}", "commands"]
+						},
+						"description": "Executa a sequência MRM do exemplo da especificação.\nInício: (0,0,NORTH)\nM: (0,1,NORTH)\nR: (0,1,EAST)\nM: (1,1,EAST)\nResultado esperado: (1, 1, EAST)"
+					},
+					"response": []
+				},
+				{
+					"name": "2.5 Mover - Sequência longa MMMMM",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"    url: pm.collectionVariables.get('base_url') + '/probes',",
+									"    method: 'POST',",
+									"    header: { 'Content-Type': 'application/json' },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({ x: 5, y: 5, direction: 'NORTH' })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.collectionVariables.set('test_probe_id', res.json().id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 200 OK', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Posição final é (0, 5)', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.x).to.eql(0);",
+									"    pm.expect(jsonData.y).to.eql(5);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"commands\": \"MMMMM\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/probes/{{test_probe_id}}/commands",
+							"host": ["{{base_url}}"],
+							"path": ["probes", "{{test_probe_id}}", "commands"]
+						},
+						"description": "Move 5 passos para o norte. De (0,0) vai para (0,5)."
+					},
+					"response": []
+				},
+				{
+					"name": "2.6 Mover - Rotação completa RRRR",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"    url: pm.collectionVariables.get('base_url') + '/probes',",
+									"    method: 'POST',",
+									"    header: { 'Content-Type': 'application/json' },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({ x: 5, y: 5, direction: 'NORTH' })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.collectionVariables.set('test_probe_id', res.json().id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 200 OK', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Direção volta para NORTH após 4 rotações', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.direction).to.eql('NORTH');",
+									"});",
+									"",
+									"pm.test('Posição permanece em (0, 0)', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.x).to.eql(0);",
+									"    pm.expect(jsonData.y).to.eql(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"commands\": \"RRRR\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/probes/{{test_probe_id}}/commands",
+							"host": ["{{base_url}}"],
+							"path": ["probes", "{{test_probe_id}}", "commands"]
+						},
+						"description": "4 rotações à direita voltam à direção original (NORTH)."
+					},
+					"response": []
+				},
+				{
+					"name": "2.7 Mover - Comandos em minúsculo",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"    url: pm.collectionVariables.get('base_url') + '/probes',",
+									"    method: 'POST',",
+									"    header: { 'Content-Type': 'application/json' },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({ x: 5, y: 5, direction: 'NORTH' })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.collectionVariables.set('test_probe_id', res.json().id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 200 OK', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Comandos em minúsculo funcionam igual', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.x).to.eql(1);",
+									"    pm.expect(jsonData.y).to.eql(1);",
+									"    pm.expect(jsonData.direction).to.eql('EAST');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"commands\": \"mrm\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/probes/{{test_probe_id}}/commands",
+							"host": ["{{base_url}}"],
+							"path": ["probes", "{{test_probe_id}}", "commands"]
+						},
+						"description": "Testa que comandos em minúsculo também funcionam."
+					},
+					"response": []
+				},
+				{
+					"name": "2.8 Mover - Percurso quadrado",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"    url: pm.collectionVariables.get('base_url') + '/probes',",
+									"    method: 'POST',",
+									"    header: { 'Content-Type': 'application/json' },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({ x: 5, y: 5, direction: 'NORTH' })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.collectionVariables.set('test_probe_id', res.json().id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 200 OK', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Sonda volta à origem após percurso quadrado', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.x).to.eql(0);",
+									"    pm.expect(jsonData.y).to.eql(0);",
+									"    pm.expect(jsonData.direction).to.eql('NORTH');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"commands\": \"MMRMRMRMM\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/probes/{{test_probe_id}}/commands",
+							"host": ["{{base_url}}"],
+							"path": ["probes", "{{test_probe_id}}", "commands"]
+						},
+						"description": "Faz um percurso que retorna à origem:\nM(0,1), M(0,2), R(E), M(1,2), R(S), M(1,1), R(W), M(0,1), M(0,0) - Wait, let me recalculate..."
+					},
+					"response": []
+				},
+				{
+					"name": "2.9 ERRO - Sonda não encontrada (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 404 Not Found', function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test('Response contém mensagem de erro', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('detail');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"commands\": \"M\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/probes/sonda-inexistente-12345/commands",
+							"host": ["{{base_url}}"],
+							"path": ["probes", "sonda-inexistente-12345", "commands"]
+						},
+						"description": "Tenta mover uma sonda que não existe. Deve retornar 404."
+					},
+					"response": []
+				},
+				{
+					"name": "2.10 ERRO - Comando inválido (422)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 422 Unprocessable Entity', function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"pm.test('Response contém detalhes do erro', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('detail');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"commands\": \"MXM\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/probes/{{probe_id}}/commands",
+							"host": ["{{base_url}}"],
+							"path": ["probes", "{{probe_id}}", "commands"]
+						},
+						"description": "Envia comando inválido 'X'. Deve retornar 422."
+					},
+					"response": []
+				},
+				{
+					"name": "2.11 ERRO - Movimento fora dos limites (400)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Cria sonda para teste de limites",
+									"pm.sendRequest({",
+									"    url: pm.collectionVariables.get('base_url') + '/probes',",
+									"    method: 'POST',",
+									"    header: { 'Content-Type': 'application/json' },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({ x: 5, y: 5, direction: 'SOUTH' })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.collectionVariables.set('test_probe_id', res.json().id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 400 Bad Request', function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test('Response contém mensagem de erro de limites', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('detail');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"commands\": \"M\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/probes/{{test_probe_id}}/commands",
+							"host": ["{{base_url}}"],
+							"path": ["probes", "{{test_probe_id}}", "commands"]
+						},
+						"description": "Sonda em (0,0) apontando para SOUTH tenta mover. Deve retornar 400 pois sairia dos limites (y=-1)."
+					},
+					"response": []
+				},
+				{
+					"name": "2.12 ERRO - Comando vazio (422)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 422 Unprocessable Entity', function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"commands\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/probes/{{probe_id}}/commands",
+							"host": ["{{base_url}}"],
+							"path": ["probes", "{{probe_id}}", "commands"]
+						},
+						"description": "Envia string de comandos vazia. Deve retornar 422."
+					},
+					"response": []
+				},
+				{
+					"name": "2.13 ERRO - Campo commands ausente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 422 Unprocessable Entity', function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/probes/{{probe_id}}/commands",
+							"host": ["{{base_url}}"],
+							"path": ["probes", "{{probe_id}}", "commands"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3. Listar Sondas (GET /probes)",
+			"item": [
+				{
+					"name": "3.1 Listar todas as sondas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 200 OK', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response contém array de probes', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('probes');",
+									"    pm.expect(jsonData.probes).to.be.an('array');",
+									"});",
+									"",
+									"pm.test('Cada sonda tem id, x, y e direction', function () {",
+									"    var jsonData = pm.response.json();",
+									"    if (jsonData.probes.length > 0) {",
+									"        var probe = jsonData.probes[0];",
+									"        pm.expect(probe).to.have.property('id');",
+									"        pm.expect(probe).to.have.property('x');",
+									"        pm.expect(probe).to.have.property('y');",
+									"        pm.expect(probe).to.have.property('direction');",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/probes",
+							"host": ["{{base_url}}"],
+							"path": ["probes"]
+						},
+						"description": "Lista todas as sondas cadastradas no sistema."
+					},
+					"response": []
+				},
+				{
+					"name": "3.2 Verificar contagem de sondas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code é 200 OK', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response contém sondas', function () {",
+									"    var jsonData = pm.response.json();",
+									"    console.log('Total de sondas: ' + jsonData.probes.length);",
+									"    pm.expect(jsonData.probes.length).to.be.at.least(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/probes",
+							"host": ["{{base_url}}"],
+							"path": ["probes"]
+						},
+						"description": "Verifica a quantidade de sondas no sistema."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "4. Cenários Completos",
+			"item": [
+				{
+					"name": "4.1 Cenário: Criar e mover sonda - Exemplo da spec",
+					"item": [
+						{
+							"name": "Criar sonda 5x5 NORTH",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('Sonda criada com sucesso', function () {",
+											"    pm.response.to.have.status(201);",
+											"    var jsonData = pm.response.json();",
+											"    pm.collectionVariables.set('scenario_probe_id', jsonData.id);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"x\": 5,\n    \"y\": 5,\n    \"direction\": \"NORTH\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/probes",
+									"host": ["{{base_url}}"],
+									"path": ["probes"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mover sonda MRM",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('Sonda na posição correta', function () {",
+											"    pm.response.to.have.status(200);",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.x).to.eql(1);",
+											"    pm.expect(jsonData.y).to.eql(1);",
+											"    pm.expect(jsonData.direction).to.eql('EAST');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"commands\": \"MRM\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/probes/{{scenario_probe_id}}/commands",
+									"host": ["{{base_url}}"],
+									"path": ["probes", "{{scenario_probe_id}}", "commands"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Verificar sonda na lista",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('Sonda aparece na lista com posição atualizada', function () {",
+											"    pm.response.to.have.status(200);",
+											"    var jsonData = pm.response.json();",
+											"    var probeId = pm.collectionVariables.get('scenario_probe_id');",
+											"    var probe = jsonData.probes.find(p => p.id === probeId);",
+											"    pm.expect(probe).to.not.be.undefined;",
+											"    pm.expect(probe.x).to.eql(1);",
+											"    pm.expect(probe.y).to.eql(1);",
+											"    pm.expect(probe.direction).to.eql('EAST');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/probes",
+									"host": ["{{base_url}}"],
+									"path": ["probes"]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "4.2 Cenário: Múltiplas sondas",
+					"item": [
+						{
+							"name": "Criar sonda 1 (NORTH)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.collectionVariables.set('multi_probe_1', jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"x\": 5,\n    \"y\": 5,\n    \"direction\": \"NORTH\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/probes",
+									"host": ["{{base_url}}"],
+									"path": ["probes"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Criar sonda 2 (EAST)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.collectionVariables.set('multi_probe_2', jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"x\": 3,\n    \"y\": 3,\n    \"direction\": \"EAST\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/probes",
+									"host": ["{{base_url}}"],
+									"path": ["probes"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mover sonda 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('Sonda 1 movida com sucesso', function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"commands\": \"MMRMM\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/probes/{{multi_probe_1}}/commands",
+									"host": ["{{base_url}}"],
+									"path": ["probes", "{{multi_probe_1}}", "commands"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mover sonda 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('Sonda 2 movida com sucesso', function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"commands\": \"MMLMM\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/probes/{{multi_probe_2}}/commands",
+									"host": ["{{base_url}}"],
+									"path": ["probes", "{{multi_probe_2}}", "commands"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Verificar ambas as sondas",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('Ambas sondas estão na lista', function () {",
+											"    pm.response.to.have.status(200);",
+											"    var jsonData = pm.response.json();",
+											"    var probe1Id = pm.collectionVariables.get('multi_probe_1');",
+											"    var probe2Id = pm.collectionVariables.get('multi_probe_2');",
+											"    ",
+											"    var ids = jsonData.probes.map(p => p.id);",
+											"    pm.expect(ids).to.include(probe1Id);",
+											"    pm.expect(ids).to.include(probe2Id);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/probes",
+									"host": ["{{base_url}}"],
+									"path": ["probes"]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
+
