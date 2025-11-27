@@ -1,6 +1,3 @@
-import pytest
-
-
 class TestLaunchProbe:
     """Tests for the POST /probes endpoint."""
 
@@ -49,14 +46,12 @@ class TestMoveProbe:
     """Tests for the PUT /probes/{id}/commands endpoint."""
 
     def test_move_probe_with_valid_commands(self, client):
-        # Primeiro lança a sonda
         launch_response = client.post(
             "/probes",
             json={"x": 5, "y": 5, "direction": "NORTH"},
         )
         probe_id = launch_response.json()["id"]
 
-        # Depois move
         response = client.put(
             f"/probes/{probe_id}/commands",
             json={"commands": "MRM"},
@@ -111,10 +106,9 @@ class TestMoveProbe:
         )
         probe_id = launch_response.json()["id"]
 
-        # Tenta mover para sul quando está em y=0
         response = client.put(
             f"/probes/{probe_id}/commands",
-            json={"commands": "LLM"},  # Vira para sul e tenta mover
+            json={"commands": "LLM"},
         )
         assert response.status_code == 400
 
@@ -129,7 +123,6 @@ class TestListProbes:
         assert data["probes"] == []
 
     def test_list_probes_after_launch(self, client):
-        # Lança uma sonda
         client.post(
             "/probes",
             json={"x": 5, "y": 5, "direction": "NORTH"},
@@ -142,7 +135,6 @@ class TestListProbes:
         assert data["probes"][0]["y"] == 0
 
     def test_list_multiple_probes(self, client):
-        # Lança duas sondas
         client.post(
             "/probes",
             json={"x": 5, "y": 5, "direction": "NORTH"},
@@ -157,7 +149,6 @@ class TestListProbes:
         assert len(data["probes"]) == 2
 
     def test_list_probes_shows_updated_position(self, client):
-        # Lança e move uma sonda
         launch_response = client.post(
             "/probes",
             json={"x": 5, "y": 5, "direction": "NORTH"},

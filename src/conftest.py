@@ -25,8 +25,6 @@ class SQLiteTestDatabase(IDatabase):
     """SQLite database implementation for tests."""
     
     def __init__(self, logger: Logger):
-        # SQLite em memória com StaticPool para manter a mesma conexão
-        # Isso é necessário porque SQLite em memória cria um banco novo para cada conexão
         self._engine = create_engine(
             "sqlite:///:memory:",
             echo=False,
@@ -41,7 +39,6 @@ class SQLiteTestDatabase(IDatabase):
             )
         )
         self._logger = logger
-        # Cria as tabelas
         Base.metadata.create_all(bind=self._engine)
 
     def create_database(self) -> None:
@@ -76,8 +73,7 @@ def test_db():
     db = SQLiteTestDatabase(logger=test_logger)
     
     yield db
-    
-    # Limpa após o teste
+
     db.close()
 
 
@@ -87,13 +83,11 @@ def client(test_db):
     app = create_app()
     
     test_logger = Logger(name="test_logger")
-    
-    # Configura o container para usar o banco de dados de teste
+
     app.container = Container()
     app.container.postgres_database.override(providers.Object(test_db))
     app.container.logger.override(providers.Object(test_logger))
-    
-    # Override do repositório para usar a session do test_db
+
     app.container.rover_repository.override(
         providers.Singleton(
             RoverRepository,

@@ -6,8 +6,6 @@ from app.domain.rover import Rover
 from app.domain.commands import validate_and_execute_commands
 from app.repositories.sql_repository import SqlRepository
 from app.infrastructure.exceptions import ProbeNotFoundError
-from app.domain.plateau import Plateau
-from app.domain.direction import Direction
 from app.infrastructure.logger import Logger
 
 class RoverService:

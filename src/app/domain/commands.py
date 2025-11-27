@@ -1,4 +1,3 @@
-from copy import deepcopy
 from dataclasses import replace
 from typing import Callable
 
@@ -60,19 +59,15 @@ def validate_and_execute_commands(rover: Rover, sequence: str) -> None:
         This is an atomic operation: either all commands run,
         or none do.
     """
-    # Cria uma cópia do rover para simulação
-    # Usamos replace() para criar nova instância com mesmo plateau (imutável)
     simulation_rover = replace(
         rover,
         x=rover.x,
         y=rover.y,
         direction=rover.direction,
     )
-    
-    # Simula a execução completa - se falhar, lança exceção
+
     execute_commands(simulation_rover, sequence)
-    
-    # Simulação bem-sucedida: aplica o estado final no rover original
+
     rover.x = simulation_rover.x
     rover.y = simulation_rover.y
     rover.direction = simulation_rover.direction
