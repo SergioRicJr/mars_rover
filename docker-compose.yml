@@ -46,5 +46,19 @@ services:
       retries: 3
       start_period: 10s
 
+  test:
+    profiles:
+      - test
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    container_name: mars-rover-test
+    working_dir: /workspace/src
+    volumes:
+      - ./src:/workspace/src
+    depends_on:
+      db:
+        condition: service_healthy
+
 volumes:
   postgres_data:
