@@ -242,7 +242,7 @@ class TestAtomicCommands:
         """If it fails midway, the rover remains in the original state."""
         # Começa em (0, 0, N), faz MM (y=2), vira para sul (LL), tenta ir para y=-1
         with pytest.raises(OutOfBoundsError):
-            validate_and_execute_commands(rover, "MMLLMMM")  # 2 norte, vira sul, 3 sul = erro em y=-1
+            validate_and_execute_commands(rover, "MMLLMMM")
         
         # Estado deve permanecer inalterado
         assert rover.x == 0
@@ -255,8 +255,8 @@ class TestAtomicCommands:
         rover.y = 1
         
         with pytest.raises(InvalidCommandError):
-            validate_and_execute_commands(rover, "MMXR")  # X é inválido
-        
+            validate_and_execute_commands(rover, "MMXR")
+
         # Estado deve permanecer inalterado
         assert rover.x == 1
         assert rover.y == 1
@@ -274,9 +274,8 @@ class TestAtomicCommands:
         # Planalto 5x5, começa em (0,0,N)
         # MMMMM vai para y=5 (limite), mais um M falharia
         with pytest.raises(OutOfBoundsError):
-            validate_and_execute_commands(rover, "MMMMMM")  # 6 movimentos para norte
+            validate_and_execute_commands(rover, "MMMMMM")
         
-        # Nenhum dos 5 movimentos válidos deve ter sido aplicado
         assert rover.x == 0
         assert rover.y == 0
 

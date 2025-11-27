@@ -34,7 +34,6 @@ services:
       - SQL_MAX_OVERFLOW=10
     volumes:
       # Mount para desenvolvimento (hot reload)
-      # Read-write necessário para Alembic poder criar arquivos temporários
       - ./src:/workspace/src
     depends_on:
       db:
@@ -46,23 +45,6 @@ services:
       timeout: 10s
       retries: 3
       start_period: 10s
-
-  # Serviço para rodar testes
-  test:
-    build:
-      context: .
-      dockerfile: Dockerfile.test
-    container_name: mars-rover-test
-    environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/mars_rover_test
-    volumes:
-      - ./src:/workspace/src:ro
-    depends_on:
-      db:
-        condition: service_healthy
-    command: ["poetry", "run", "--directory", "src", "pytest", "tests/", "-v", "--tb=short"]
-    profiles:
-      - test
 
 volumes:
   postgres_data:
