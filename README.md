@@ -145,7 +145,7 @@ $Env:SQL_MAX_OVERFLOW = "10"
 4. Execute a aplicação (ainda dentro de `src/`):
 
 ```bash
-poetry run uvicorn main:app --reload --host 0.0.0.0 --port 8000
+python main.py
 ```
 
 A API ficará disponível em `http://localhost:8000`.
