@@ -33,7 +33,9 @@ RUN poetry install --no-root --only main
 
 # Copia e torna executável o entrypoint
 COPY src/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+# Converte finais de linha para Unix (caso o arquivo tenha sido salvo em Windows) e garante permissão
+RUN sed -i 's/\r$//' /usr/local/bin/docker-entrypoint.sh && \
+    chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Configura PYTHONPATH para imports funcionarem
 ENV PYTHONPATH=/workspace/src
