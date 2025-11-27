@@ -8,9 +8,14 @@ API REST para controlar sondas exploradoras em Marte. Desenvolvida como desafio 
 - [Tecnologias](#tecnologias)
 - [Estrutura do Projeto](#estrutura-do-projeto)
 - [Instalação e Execução](#instalação-e-execução)
+  - [Execução local (sem Docker)](#execução-local-sem-docker)
+  - [Execução com Docker](#execução-com-docker)
+- [Documentação Interativa](#documentação-interativa)
+- [Migrations (Alembic)](#migrations-alembic)
 - [Endpoints da API](#endpoints-da-api)
 - [Testes](#testes)
-- [Docker](#docker)
+- [CI/CD](#cicd)
+- [Exemplos de Uso](#exemplos-de-uso)
 
 ---
 
@@ -177,6 +182,26 @@ docker run -p 8000:8000 mars-rover-api
 
 ---
 
+## Migrations (Alembic)
+
+- As migrations ficam em `src/alembic/versions` e são gerenciadas via Alembic.
+- Para aplicar o estado mais recente no ambiente local (já dentro de `src/` e com as variáveis configuradas):
+
+```bash
+poetry run alembic upgrade head
+```
+
+- Para criar uma nova migration baseada no modelo atual:
+
+```bash
+poetry run alembic revision --autogenerate -m "descricao_da_migration"
+```
+
+- Ao subir via `docker-compose up`, o `docker-entrypoint.sh` roda `alembic upgrade head` automaticamente assim que o banco Postgres estiver saudável; detalhes em `MIGRATIONS_DOCKER.md`.
+- Se preferir executar dentro do container: `docker-compose exec api poetry run alembic current` (status) e `docker-compose exec api poetry run alembic history` (histórico).
+
+---
+
 ## Endpoints da API
 
 ### 1. Lançar Sonda
@@ -303,6 +328,14 @@ poetry run pytest tests/test_domain.py
 # Apenas testes de API
 poetry run pytest tests/test_api.py
 ```
+
+---
+
+## CI/CD
+
+- A pipeline está definida em `.github/workflows/tests.yml` e roda automaticamente no GitHub Actions em todos os pushes para a branch `master`.
+- O workflow instala as dependências via Poetry e executa `poetry run pytest`, garantindo que a suíte complete sem falhas antes de aceitar alterações.
+- Os resultados aparecem na aba **Actions** do repositório no GitHub, permitindo acompanhar logs, histórico de execuções e status dos testes.
 
 ---
 
