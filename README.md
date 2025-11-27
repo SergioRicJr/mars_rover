@@ -119,6 +119,7 @@ cd mars-rover
 
 ```bash
 cd src
+poetry shell
 poetry install
 ```
 
